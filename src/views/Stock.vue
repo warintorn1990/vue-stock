@@ -45,8 +45,32 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-text-field v-model="search"> </v-text-field>
     <v-card class="mt-2">
-      <v-data-table :headers="headers" :items="mDataArray">
+      <v-data-table :search="search" :headers="headers" :items="mDataArray">
+        <template v-slot:top>
+          <v-toolbar flat color="white">
+            <v-toolbar-title>Stock</v-toolbar-title>
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+            <v-spacer></v-spacer>
+            <v-btn
+              @click="$router.push('/stock-create')"
+              color="primary"
+              dark
+              class="mb-2"
+            >
+              <v-icon left>add</v-icon>
+              <span>New Product</span>
+            </v-btn>
+          </v-toolbar>
+        </template>
         <template v-slot:item="{ item }">
           <tr>
             <td>{{ item.id }}</td>
@@ -85,6 +109,7 @@ export default {
   },
   data() {
     return {
+      search: "",
       mDataArray: [],
       headers: [
         {
@@ -108,7 +133,15 @@ export default {
     });
   },
 
-  methods: {},
+  methods: {
+    editItem(item) {
+      this.$router.push(`/stock-edit/${item.id}`);
+    },
+    deleteItem(item) {
+      this.selectedProductId = item.id;
+      this.confirmDeleteDlg = true;
+    }
+  },
 };
 </script>
 

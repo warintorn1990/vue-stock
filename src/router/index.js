@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Stock from "../views/Stock.vue";
 import StockCreate  from "../views/StockCreate.vue";
+import StockEdit from "../views/StockEdit.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: "/stock-create",
     name: "StockCreate",
     component: StockCreate,
+  },
+  {
+    path: "/stock-edit/:id",
+    name: "stock-edit",
+    component: StockEdit
   },
   {
     path: "/about",
