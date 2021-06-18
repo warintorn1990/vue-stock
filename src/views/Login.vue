@@ -36,9 +36,9 @@
 </template>
 
 <script>
+import api from "@/services/api";
 export default {
   name: "Login",
-
   data() {
     return {
       isShowPassword: false,
@@ -51,7 +51,11 @@ export default {
     };
   },
 
-  mounted() {},
+  mounted() {
+    if (api.isLoggedIn()) {
+      this.$router.push("/stock");
+    }
+  },
 
   methods: {
     submit() {

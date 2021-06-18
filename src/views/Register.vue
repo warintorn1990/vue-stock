@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import api from '@/services/api';
 export default {
   name: "Register",
 
@@ -62,7 +63,8 @@ export default {
 
   methods: {
       submit(){
-          alert('aaa')
+          // alert('aaa')
+          api.register(this.account);
       }
   },
 };
