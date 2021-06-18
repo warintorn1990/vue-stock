@@ -45,21 +45,68 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-card class="mt-2">
+      <v-data-table :headers="headers" :items="mDataArray">
+        <template v-slot:item="{ item }">
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>
+              <v-img
+                :src="item.image | imageUrl"
+                lazy-src="https://www.seekpng.com/png/detail/204-2049159_box-icon-png-product-and-services-icon.png"
+                aspect-ratio="1"
+                max-width="50"
+                max-height="50"
+              ></v-img>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price | currency("฿") }}</td>
+            <td>{{ item.stock | number("0,0") }} pcs.</td>
+            <td>
+              <v-icon class="mr-2" @click="editItem(item)"> edit </v-icon>
+              <span class="ma-1"></span>
+              <v-icon @click="deleteItem(item)"> delete </v-icon>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
+    </v-card>
   </v-container>
 </template>
 
 <script>
 import StockCard from "@/components/cards/StockCard.vue";
+import Axios from "axios";
+
 export default {
   name: "Stock",
   components: {
     StockCard,
   },
   data() {
-    return {};
+    return {
+      mDataArray: [],
+      headers: [
+        {
+          text: "Id",
+          align: "left",
+          sortable: false,
+          value: "id",
+        },
+        { text: "Image", value: "image" },
+        { text: "Name", value: "name" },
+        { text: "Price", value: "price" },
+        { text: "Stock", value: "stock" },
+        { text: "Action", value: "action" },
+      ],
+    };
   },
 
-  mounted() {},
+  mounted() {
+    Axios.get("http://127.0.0.1:3000/product").then((response) => {
+      this.mDataArray = response.data;
+    });
+  },
 
   methods: {},
 };
